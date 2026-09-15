@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evidence & Reasoning Challenge</title>
+    <style>
+        :root {
+            --bg-color: #fcfbf7;
+            --card-bg: #ffffff;
+            --text-color: #1a1a1a;
+            --border-color: #1a1a1a;
+            --accent-red: #d9381e;
+            --accent-purple: #6b3ba7;
+            --accent-teal: #008080;
+            --accent-yellow: #f4c430;
+            --success-color: #2e7d32;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Segoe UI', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border: 3px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 6px 6px 0px var(--border-color);
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 3px dashed var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: var(--accent-purple);
+            font-size: 2em;
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+        .tagline {
+            font-weight: bold;
+            color: var(--accent-red);
+            font-size: 1.1em;
+        }
+
+        .student-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+            background: #f3f3f3;
+            padding: 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            font-weight: bold;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .input-group input {
+            padding: 8px;
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
+            font-family: inherit;
+        }
+
+        .section-header {
+            background: var(--border-color);
+            color: white;
+            padding: 8px 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+            border-radius: 6px;
+            margin: 30px 0 15px 0;
+        }
+
+        .card {
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 25px;
+            background: #fff;
+            box-shadow: 4px 4px 0px #ddd;
+        }
+
+        .passage-box {
+            background: #fffdf0;
+            border: 2px dashed var(--accent-yellow);
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        .claim-box {
+            background: #f0f7f7;
+            border-left: 5px solid var(--accent-teal);
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .q-label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
+            font-family: inherit;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        .radio-group label {
+            display: block;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 6px;
+            display: none;
+            font-weight: bold;
+        }
+
+        .feedback.correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .feedback.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .actions {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        button {
+            background: var(--accent-yellow);
+            color: var(--border-color);
+            border: 3px solid var(--border-color);
+            padding: 12px 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 3px 3px 0px var(--border-color);
+            margin: 5px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 5px 5px 0px var(--border-color);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        #print-btn {
+            background: var(--accent-teal);
+            color: white;
+            display: none;
+        }
+
+        .footer-logo {
+            text-align: left;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-top: 20px;
+            color: #666;
+        }
+
+        @media print {
+            button, .actions { display: none !important; }
+            body { padding: 0; background: white; }
+            .container { box-shadow: none; border: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Show the Receipt & Point to What Matters</h1>
+        <div class="tagline">Selecting Strongest Evidence & Explaining Reasoning</div>
+    </header>
+
+    <div class="student-info">
+        <div class="input-group">
+            <label>Student Name:</label>
+            <input type="text" id="student-name" placeholder="First & Last Name">
+        </div>
+        <div class="input-group">
+            <label>Date:</label>
+            <input type="date" id="student-date">
+        </div>
+        <div class="input-group">
+            <label>Class Period:</label>
+            <input type="text" id="student-period" placeholder="e.g. 3rd Period">
+        </div>
+    </div>
+
+    <!-- LEVEL 1 -->
+    <div class="section-header">LEVEL 1: Identifying True vs. Strongest Evidence</div>
+
+    <!-- Q1 -->
+    <div class="card" id="q1-card">
+        <div class="passage-box"><strong>Passage:</strong> Sofia stood in the wings of the auditorium stage. Her palms were slick with sweat, and her heart hammered against her ribs. When the director called her name, Sofia took a deep breath, stepped into the center spotlight, and delivered her monologue in a clear voice without stumbling once.</div>
+        <div class="claim-box"><strong>Claim:</strong> Sofia is able to overcome her nerves and remain composed under pressure.</div>
+        <span class="q-label">1. Select the STRONGEST text evidence that proves the claim:</span>
+        <select id="q1-ans">
+            <option value="">-- Choose Evidence --</option>
+            <option value="A">"Sofia stood in the wings of the auditorium stage."</option>
+            <option value="B">"Her palms were slick with sweat, and her heart hammered against her ribs."</option>
+            <option value="C">"...took a deep breath, stepped into the center spotlight, and delivered her monologue in a clear voice..."</option>
+        </select>
+        <div class="feedback" id="q1-fb"></div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="card" id="q2-card">
+        <div class="passage-box"><strong>Passage:</strong> When the teacher assigned the project, David’s group members immediately argued about who would present. David pulled out a sheet of paper, drew three columns labeled Research, Slides, and Speaking, and asked everyone to sign up. Within five minutes, the group was working peacefully.</div>
+        <div class="claim-box"><strong>Claim:</strong> David is an organized leader who effectively resolves group conflict.</div>
+        <span class="q-label">2. Select the STRONGEST text evidence that proves the claim:</span>
+        <select id="q2-ans">
+            <option value="">-- Choose Evidence --</option>
+            <option value="A">"...drew three columns labeled Research, Slides, and Speaking, and asked everyone to sign up."</option>
+            <option value="B">"David’s group members immediately argued about who would present."</option>
+            <option value="C">"Within five minutes, the group was working peacefully."</option>
+        </select>
+        <div class="feedback" id="q2-fb"></div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="card" id="q3-card">
+        <div class="passage-box"><strong>Passage:</strong> At lunch, someone spilled milk across the floor. Most students laughed or walked past it. Maya stopped, grabbed paper towels from the counter, and began wiping up the spill. When the custodian arrived with a mop, Maya handed him the dirty towels and thanked him.</div>
+        <div class="claim-box"><strong>Claim:</strong> Maya is responsible and respectful toward school staff.</div>
+        <span class="q-label">3. Select the STRONGEST text evidence that proves the claim:</span>
+        <select id="q3-ans">
+            <option value="">-- Choose Evidence --</option>
+            <option value="A">"Most students laughed or walked past it."</option>
+            <option value="B">"...grabbed paper towels from the counter, wiped up the spill, handed him the dirty towels and thanked him."</option>
+            <option value="C">"At lunch, someone spilled milk across the floor."</option>
+        </select>
+        <div class="feedback" id="q3-fb"></div>
+    </div>
+
+    <!-- LEVEL 2 -->
+    <div class="section-header">LEVEL 2: Pointing to What Matters (Exact Word Analysis)</div>
+
+    <!-- Q4 -->
+    <div class="card" id="q4-card">
+        <div class="claim-box"><strong>Claim:</strong> Jamal is persistent and does not give up easily.</div>
+        <div class="passage-box"><strong>Evidence Used:</strong> "Jamal stayed near the basket and practiced the same shot again and again. He adjusted his feet and tried once more."</div>
+        <span class="q-label">4. Which specific key phrases "do the work" to prove persistence?</span>
+        <select id="q4-ans">
+            <option value="">-- Choose Key Words --</option>
+            <option value="A">"near the basket" and "adjusted his feet"</option>
+            <option value="B">"again and again" and "tried once more"</option>
+            <option value="C">"same shot" and "his feet"</option>
+        </select>
+        <div class="feedback" id="q4-fb"></div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="card" id="q5-card">
+        <div class="claim-box"><strong>Claim:</strong> Marcus is committed to improving his work through teacher feedback.</div>
+        <div class="passage-box"><strong>Evidence Used:</strong> "After class, Marcus stayed behind to take notes on the teacher’s suggestions."</div>
+        <span class="q-label">5. Which specific key phrases "do the work" to prove his commitment to improvement?</span>
+        <select id="q5-ans">
+            <option value="">-- Choose Key Words --</option>
+            <option value="A">"After class" and "stayed behind"</option>
+            <option value="B">"stayed behind" and "take notes on suggestions"</option>
+            <option value="C">"After class" and "the teacher"</option>
+        </select>
+        <div class="feedback" id="q5-fb"></div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="card" id="q6-card">
+        <div class="claim-box"><strong>Claim:</strong> Elena felt anxious and uncertain when entering the room.</div>
+        <div class="passage-box"><strong>Evidence Used:</strong> "When Elena entered the cafeteria, she stopped near the doorway and tightened both hands around her lunch tray."</div>
+        <span class="q-label">6. Which key phrase "does the work" to show physical tension/anxiety?</span>
+        <select id="q6-ans">
+            <option value="">-- Choose Key Words --</option>
+            <option value="A">"entered the cafeteria"</option>
+            <option value="B">"tightened both hands"</option>
+            <option value="C">"around her lunch tray"</option>
+        </select>
+        <div class="feedback" id="q6-fb"></div>
+    </div>
+
+    <!-- LEVEL 3 -->
+    <div class="section-header">LEVEL 3: Explaining WHY Evidence Proves the Claim (Reasoning Stems)</div>
+
+    <!-- Q7 -->
+    <div class="card" id="q7-card">
+        <div class="claim-box"><strong>Claim:</strong> Maya is responsible and respectful toward school staff.</div>
+        <div class="passage-box"><strong>Evidence:</strong> "...handed him the dirty towels and thanked him."</div>
+        <span class="q-label">7. Select the BEST reasoning statement that connects this evidence back to the claim:</span>
+        <select id="q7-ans">
+            <option value="">-- Choose Reasoning --</option>
+            <option value="A">This shows that Maya likes using paper towels when there is a mess in the cafeteria.</option>
+            <option value="B">This proves Maya is respectful because she took initiative to clean a mess she didn't make and verbally acknowledged the custodian's help.</option>
+            <option value="C">This detail is true because custodians always clean up spills with mops after lunch ends.</option>
+        </select>
+        <div class="feedback" id="q7-fb"></div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="card" id="q8-card">
+        <div class="claim-box"><strong>Claim:</strong> Sofia is able to overcome her nerves under pressure.</div>
+        <div class="passage-box"><strong>Evidence:</strong> "...took a deep breath, stepped into the center spotlight, and delivered her monologue in a clear voice..."</div>
+        <span class="q-label">8. Select the BEST reasoning statement that connects this evidence back to the claim:</span>
+        <select id="q8-ans">
+            <option value="">-- Choose Reasoning --</option>
+            <option value="A">Taking a breath and speaking clearly shows physical self-control, proving she managed her fear to perform successfully.</option>
+            <option value="B">Sofia was standing on a stage with a spotlight, which proves that she is an actor.</option>
+            <option value="C">This shows that Sofia was sweating before she walked out onto the center of the stage.</option>
+        </select>
+        <div class="feedback" id="q8-fb"></div>
+    </div>
+
+    <!-- LEVEL 4 -->
+    <div class="section-header">LEVEL 4: "Nope! Not This One" (Spotting True vs. Relevant Distractors)</div>
+
+    <!-- Q9 -->
+    <div class="card" id="q9-card">
+        <div class="claim-box"><strong>Claim:</strong> Marcus is committed to improving his work.</div>
+        <div class="passage-box"><strong>Distractor Detail:</strong> "Marcus had spent three nights building his model bridge."</div>
+        <span class="q-label">9. Why is this detail "TRUELY IN THE TEXT" but NOT the STRONGEST evidence for this claim?</span>
+        <select id="q9-ans">
+            <option value="">-- Choose Explanation --</option>
+            <option value="A">Because Marcus didn't actually build a bridge; his partner built it.</option>
+            <option value="B">It proves he spent time on the initial project, but it does NOT prove his willingness to accept feedback and make improvements later.</option>
+            <option value="C">It is false because the story said he built it in two nights, not three nights.</option>
+        </select>
+        <div class="feedback" id="q9-fb"></div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="card" id="q10-card">
+        <div class="claim-box"><strong>Claim:</strong> Elena’s feelings changed from nervous to comfortable.</div>
+        <div class="passage-box"><strong>Distractor Detail:</strong> "When Elena entered the cafeteria, she stopped near the doorway..."</div>
+        <span class="q-label">10. Why is pointing to this detail "waving around the wrong receipt item"?</span>
+        <select id="q10-ans">
+            <option value="">-- Choose Explanation --</option>
+            <option value="A">It merely states an action (entering/stopping) without providing proof of how her internal emotional state actually shifted to comfort.</option>
+            <option value="B">Because Elena never entered the cafeteria in the story.</option>
+            <option value="C">Stopping near a doorway proves that a student is hungry, not nervous.</option>
+        </select>
+        <div class="feedback" id="q10-fb"></div>
+    </div>
+
+    <div class="actions">
+        <button id="submit-btn" onclick="checkAnswers()">Submit Answers (Attempt 1/2)</button>
+        <button id="print-btn" onclick="window.print()">Print / Save PDF</button>
+    </div>
+
+    <div class="footer-logo">WRITING TO THE NTH DEGREE™</div>
+</div>
+
+<script>
+    let attempt = 1;
+
+    const key = {
+        q1: "C",
+        q2: "A",
+        q3: "B",
+        q4: "B",
+        q5: "B",
+        q6: "B",
+        q7: "B",
+        q8: "A",
+        q9: "B",
+        q10: "A"
+    };
+
+    const hints = {
+        q1: "Look for the evidence showing her ACTION under pressure, not just her nervous feelings.",
+        q2: "Choose the action David took to resolve the arguing, not the arguing itself or the result.",
+        q3: "Find the quote that shows BOTH cleaning up and showing respect to the staff member.",
+        q4: "Look for words indicating repetition and multiple attempts.",
+        q5: "Focus on the words showing he took action specifically to get teacher guidance.",
+        q6: "Which action shows physical tension or stress in her body?",
+        q7: "Reasoning must explain WHY the action proves responsibility and respect.",
+        q8: "Reasoning must explain HOW taking a breath and speaking clearly managed her physical fear.",
+        q9: "Does spending 3 nights prove he wants to IMPROVE work, or just that he built it?",
+        q10: "Does stopping at a door prove her feelings CHANGED to comfort? Focus on the emotional shift."
+    };
+
+    function checkAnswers() {
+        const name = document.getElementById('student-name').value.trim();
+        if (!name) {
+            alert('Please enter your Name before submitting!');
+            return;
+        }
+
+        let score = 0;
+        let total = 10;
+
+        for (let i = 1; i <= total; i++) {
+            let ans = document.getElementById(`q${i}-ans`).value;
+            let fb = document.getElementById(`q${i}-fb`);
+            fb.style.display = 'block';
+
+            if (ans === key[`q${i}`]) {
+                score++;
+                fb.className = 'feedback correct';
+                fb.innerHTML = '✓ Correct!';
+            } else {
+                fb.className = 'feedback incorrect';
+                if (attempt === 1) {
+                    fb.innerHTML = `✗ Incorrect. Hint: ${hints[`q${i}`]}`;
+                } else {
+                    fb.innerHTML = `✗ Incorrect. Correct answer was (${key[`q${i}`]}).`;
+                }
+            }
+        }
+
+        const btn = document.getElementById('submit-btn');
+
+        if (score === total || attempt === 2) {
+            btn.disabled = true;
+            btn.innerText = `Final Score: ${score}/${total}`;
+            document.getElementById('print-btn').style.display = 'inline-block';
+            lockInputs();
+        } else {
+            attempt++;
+            btn.innerText = `Re-submit Incorrect Answers (Attempt 2/2)`;
+            alert(`You scored ${score}/${total}. Review the hints and adjust your incorrect answers before attempt 2!`);
+        }
+    }
+
+    function lockInputs() {
+        for (let i = 1; i <= 10; i++) {
+            document.getElementById(`q${i}-ans`).disabled = true;
+        }
+    }
+</script>
+</body>
+</html>
