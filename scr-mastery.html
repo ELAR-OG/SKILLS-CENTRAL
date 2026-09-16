@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCR Mastery | Writing to the Nth Degree™</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --accent: #d97706;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1f2937;
+            --border: #e2e8f0;
+            --correct: #15803d;
+            --incorrect: #b91c1c;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 { margin: 0 0 10px 0; font-size: 1.8rem; }
+        header p { margin: 0; opacity: 0.9; }
+
+        /* Unified Student Header */
+        .student-header {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            margin-bottom: 25px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .input-group label {
+            font-weight: bold;
+            font-size: 0.85rem;
+            color: var(--primary);
+        }
+
+        .input-group input, .input-group select {
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.95rem;
+        }
+
+        /* Just-In-Time Micro-Refresher Header */
+        .mini-teach {
+            background: #eff6ff;
+            border-left: 4px solid var(--primary);
+            padding: 15px 20px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 25px;
+        }
+
+        .mini-teach h2 { margin: 0 0 5px 0; color: var(--primary); font-size: 1.2rem; }
+
+        .pedagogy-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            border-top: 3px solid var(--accent);
+        }
+
+        .card h3 { margin: 0 0 5px 0; font-size: 1rem; color: var(--accent); }
+        .card p { margin: 0; font-size: 0.85rem; color: #4b5563; }
+
+        /* SCR Question Cards */
+        .scr-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            margin-bottom: 25px;
+        }
+
+        .passage-box {
+            background: #f1f5f9;
+            padding: 15px;
+            border-radius: 6px;
+            font-style: italic;
+            margin-bottom: 15px;
+            border-left: 3px solid #94a3b8;
+        }
+
+        .prompt-box {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-weight: bold;
+            font-size: 0.95rem;
+            color: var(--accent);
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+
+        select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        textarea { height: 70px; resize: vertical; }
+
+        .feedback {
+            display: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+
+        .feedback.correct { background: #dcfce7; color: var(--correct); }
+        .feedback.incorrect { background: #fee2e2; color: var(--incorrect); }
+
+        /* Action Buttons */
+        .action-bar {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .btn-secondary {
+            background: var(--accent);
+            display: none;
+        }
+
+        .btn:hover { opacity: 0.9; }
+
+        @media print {
+            .mini-teach, .pedagogy-cards, .action-bar, .student-header { border: none; }
+            .btn { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Short Constructed Response (SCR) Mastery</h1>
+        <p>TEKS 8.5(F), 8.5(G), 8.6(B), 8.7(B), 8.10(B), 8.11(D) | Writing to the Nth Degree™</p>
+    </header>
+
+    <!-- Unified Student Header -->
+    <div class="student-header">
+        <div class="input-group">
+            <label for="student-name">Student Full Name:</label>
+            <input type="text" id="student-name" placeholder="First & Last Name">
+        </div>
+        <div class="input-group">
+            <label for="student-date">Date:</label>
+            <input type="date" id="student-date">
+        </div>
+        <div class="input-group">
+            <label for="student-cohort">Cohort:</label>
+            <select id="student-cohort">
+                <option value="">--Select Cohort--</option>
+                <option value="8A">8A</option>
+                <option value="8B">8B</option>
+                <option value="8C">8C</option>
+                <option value="8D">8D</option>
+                <option value="8E">8E</option>
+                <option value="8F">8F</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Just-In-Time Micro-Refresher -->
+    <div class="mini-teach">
+        <h2>Just-In-Time Micro-Refresher</h2>
+        <p>A full 2-point STAAR Short Constructed Response requires three seamless pieces: an authoritative <strong>Chop & Flip Claim</strong>, direct <strong>Receipt Evidence</strong>, and high-impact <strong>Reasoning/Analysis</strong> that shows why the evidence matters.</p>
+    </div>
+
+    <!-- Buy-In Cards -->
+    <div class="pedagogy-cards">
+        <div class="card">
+            <h3>👑 The Boss</h3>
+            <p>Deconstruct the task and target the exact skill required by the prompt.</p>
+        </div>
+        <div class="card">
+            <h3>🧾 The Proof</h3>
+            <p>Drop the distractor traps and isolate the exact textual receipt that proves your point.</p>
+        </div>
+        <div class="card">
+            <h3>🔄 The Remix</h3>
+            <p>Combine Claim, Evidence, and Impact Reasoning into a complete 2-point response.</p>
+        </div>
+    </div>
+
+    <!-- SCR Container -->
+    <div id="scr-container"></div>
+
+    <!-- Action Buttons -->
+    <div class="action-bar">
+        <button class="btn" id="submit-btn" onclick="checkSCR()">Submit SCR Work</button>
+        <button class="btn btn-secondary" id="print-btn" onclick="window.print()">Print / Save PDF</button>
+    </div>
+</div>
+
+<script>
+    // Auto-set today's date
+    document.getElementById('student-date').valueAsDate = new Date();
+
+    const passages = [
+        {
+            id: 1,
+            text: "Urban rooftop gardens have expanded rapidly in dense metropolitan areas. Environmental studies indicate that these gardens lower building temperatures by up to 15% in summer, significantly reducing air conditioning energy demands. Additionally, residents report higher community engagement when participating in shared garden maintenance.",
+            prompt: "Based on the passage, explain how rooftop gardens benefit urban communities.",
+            taskCorrect: "benefit",
+            nopeCorrect: "engagement",
+            sampleClaim: "Rooftop gardens benefit urban communities by reducing energy costs and fostering social connection."
+        },
+        {
+            id: 2,
+            text: "Deep-sea exploration devices face severe technological barriers due to oceanic pressure exceeding 1,000 atmospheres at trench depths. Engineers recently developed titanium-composite hulls that resist micro-fractures during prolonged submersions, allowing scientists to gather unprecedented geological samples.",
+            prompt: "Based on the passage, explain how technological advances have improved deep-sea ocean exploration.",
+            taskCorrect: "technology",
+            nopeCorrect: "samples",
+            sampleClaim: "Technological advances have improved deep-sea ocean exploration by creating durable hulls that withstand extreme pressure."
+        }
+    ];
+
+    function renderSCR() {
+        const container = document.getElementById('scr-container');
+        container.innerHTML = passages.map((p, index) => `
+            <div class="scr-card">
+                <div class="prompt-box">SCR Item ${index + 1}: ${p.prompt}</div>
+                <div class="passage-box">"${p.text}"</div>
+                
+                <div class="section-title">Step 1: Deconstruct The Boss (Identify Core Task)</div>
+                <select id="q${p.id}-task">
+                    <option value="">--Select Core Task--</option>
+                    <option value="benefit">Explain a benefit or positive impact described in the text</option>
+                    <option value="technology">Explain technological improvements and solutions</option>
+                    <option value="summary">Provide a general overview of the entire passage</option>
+                </select>
+
+                <div class="section-title">Step 2: Filter Distractors (Identify What NOT to Focus On)</div>
+                <select id="q${p.id}-nope">
+                    <option value="">--Select Distractor Trap--</option>
+                    <option value="engagement">Side details that don't answer the primary prompt target</option>
+                    <option value="samples">Individual facts mentioned in passing</option>
+                </select>
+
+                <div class="section-title">Step 3: Write Your Chop & Flip Claim</div>
+                <textarea id="q${p.id}-claim" placeholder="Chop question words and flip prompt into an authoritative statement..."></textarea>
+
+                <div class="section-title">Step 4: Provide Receipt Evidence</div>
+                <textarea id="q${p.id}-evidence" placeholder="Quote exact textual proof from the passage..."></textarea>
+
+                <div class="section-title">Step 5: Reasoning / Impact Analysis</div>
+                <textarea id="q${p.id}-reasoning" placeholder="Explain HOW and WHY your quote proves your claim..."></textarea>
+
+                <div id="fb-${p.id}" class="feedback"></div>
+            </div>
+        `).join('');
+    }
+
+    function checkSCR() {
+        const name = document.getElementById('student-name').value.trim();
+        const cohort = document.getElementById('student-cohort').value;
+
+        if (!name || !cohort) {
+            alert('Please enter your Name and select your Cohort before submitting!');
+            return;
+        }
+
+        let completeCount = 0;
+
+        passages.forEach(p => {
+            const task = document.getElementById(`q${p.id}-task`).value;
+            const claim = document.getElementById(`q${p.id}-claim`).value.trim();
+            const evidence = document.getElementById(`q${p.id}-evidence`).value.trim();
+            const reasoning = document.getElementById(`q${p.id}-reasoning`).value.trim();
+            const fb = document.getElementById(`fb-${p.id}`);
+
+            fb.style.display = 'block';
+
+            const isTaskValid = task !== "";
+            const isClaimValid = claim.length > 15;
+            const isEvidenceValid = evidence.length > 10;
+            const isReasoningValid = reasoning.length > 15;
+
+            if (isTaskValid && isClaimValid && isEvidenceValid && isReasoningValid) {
+                completeCount++;
+                fb.className = 'feedback correct';
+                fb.innerHTML = '✓ Complete 2-Point SCR Structure! Claim, evidence receipt, and reasoning analysis are properly framed.';
+            } else {
+                fb.className = 'feedback incorrect';
+                fb.innerHTML = '✗ Incomplete Response: Make sure all dropdowns are selected and your Claim, Evidence, and Reasoning sentences are completely written.';
+            }
+        });
+
+        const pct = Math.round((completeCount / passages.length) * 100);
+        const submitBtn = document.getElementById('submit-btn');
+        submitBtn.innerText = `Submitted (${completeCount}/${passages.length} Complete - ${pct}%)`;
+        document.getElementById('print-btn').style.display = 'inline-block';
+    }
+
+    renderSCR();
+</script>
+
+</body>
+</html>
