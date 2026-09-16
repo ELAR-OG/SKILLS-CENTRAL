@@ -3,20 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skills Central Hub</title>
+    <title>8th Grade ELAR Mastery Suite | Writing to the Nth Degree™</title>
     <style>
-        body { font-family: 'Comic Sans MS', sans-serif; background: #fcfbf7; max-width: 500px; margin: 40px auto; padding: 20px; }
-        .box { background: white; border: 3px solid #1a1a1a; border-radius: 12px; padding: 25px; box-shadow: 5px 5px 0px #1a1a1a; text-align: center; }
-        h1 { color: #6b3ba7; margin-bottom: 10px; }
-        a { display: block; background: #f4c430; color: #1a1a1a; text-decoration: none; padding: 12px; margin: 10px 0; border: 2px solid #1a1a1a; border-radius: 8px; font-weight: bold; }
+        :root {
+            --primary: #1e3a8a;
+            --accent: #d97706;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1f2937;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+        }
+
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 { margin: 0 0 10px 0; font-size: 2rem; }
+        header p { margin: 0; opacity: 0.9; }
+
+        .app-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .app-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-left: 6px solid var(--accent);
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .app-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px -2px rgba(0, 0, 0, 0.1);
+        }
+
+        .app-info h2 {
+            margin: 0 0 5px 0;
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+
+        .app-info p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        .badge {
+            background: #eff6ff;
+            color: var(--primary);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
     </style>
 </head>
 <body>
-    <div class="box">
-        <h1>SKILLS CENTRAL</h1>
-        <p>Choose your assignment:</p>
-        <a href="TTQA%20Challenge.html">1. TTQA Chop & Flip Challenge</a>
-        <a href="evidence-challenge.html">2. Evidence & Reasoning Challenge</a>
+
+<div class="container">
+    <header>
+        <h1>ELAR STAAR Mastery Suite</h1>
+        <p>Writing to the Nth Degree™ | Interactive Practice Suite</p>
+    </header>
+
+    <div class="app-grid">
+        <!-- Choice 1 -->
+        <a href="ttqa-practice.html" class="app-card">
+            <div class="app-info">
+                <h2>1. TTQA Practice</h2>
+                <p>Chop & Flip Claim Sentence Stems (TEKS 8.10B, 8.11D)</p>
+            </div>
+            <span class="badge">Launch App →</span>
+        </a>
+
+        <!-- Choice 2 -->
+        <a href="evidence-challenge.html" class="app-card">
+            <div class="app-info">
+                <h2>2. Evidence Challenge</h2>
+                <p>Receipt-Based Evidence & Distractor Trap Filtering (TEKS 8.6B, 8.5G)</p>
+            </div>
+            <span class="badge">Launch App →</span>
+        </a>
+
+        <!-- Choice 3 (NEW) -->
+        <a href="scr-mastery.html" class="app-card">
+            <div class="app-info">
+                <h2>3. SCR Mastery</h2>
+                <p>Short Constructed Response Claim, Proof & Impact Analysis (Full TEKS Suite)</p>
+            </div>
+            <span class="badge">Launch App →</span>
+        </a>
     </div>
+</div>
+
 </body>
 </html>
